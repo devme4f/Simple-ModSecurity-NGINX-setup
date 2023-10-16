@@ -29,6 +29,8 @@ echo -e "${c}Get nginx connector for ModSecurity Module"; $r
 mkdir /etc/nginx/modules
 cp ./modsecurity-connector/1.18.0/ngx_http_modsecurity_module.so  /etc/nginx/modules/ngx_http_modsecurity_module.so
 
+echo -e "${c}Create /etc/nginx/nginx.conf backup file"; $r
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 echo -e "${c}Enable ModSecurity in nginx.conf"; $r
 sed -i '1i\load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;' /etc/nginx/nginx.conf
 sed -i '/http {/a \    modsecurity on;\n    modsecurity_rules_file /etc/nginx/modsec/modsec-config.conf;' /etc/nginx/nginx.conf
