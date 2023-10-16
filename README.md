@@ -6,7 +6,7 @@ This script support default nginx version corresponding to lately Ubuntu LTS ver
 
 **Ideas**: https://github.com/shubhampathak/ModSecurity-NGINX-setup
 ## Compatibility
-Tested again `Ubuntu 22.04.2 LTS/nginx 1.18.0`,  
+**Tested again**: `Ubuntu 22.04.2 LTS/nginx 1.18.0`, `Ubuntu 20.04.6 LTS/nginx 1.18.0`
 
 ## setup-modsec-nginx.sh
 This script will:
@@ -22,6 +22,6 @@ Just run:
 sudo bash setup-modsec-nginx.sh
 ```
 
-Example setup success:
+Example setup successful:
 
 ![success.png](images/success.png)

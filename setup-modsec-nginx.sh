@@ -63,9 +63,14 @@ echo "Include /etc/nginx/modsec/coreruleset-nightly/rules/*.conf" >> /etc/nginx/
 rm -rf nightly.tar.gz
 
 
-echo -e "${c}Remove some OWASP rules because of parsing error due to Modsec version compatibility (libmodsecurity3.0.6-1)"; $r
-# https://forum.directadmin.com/threads/owasp-modsecurity-core-rule-set-version-3-3-4.67101/
-sudo rm /etc/nginx/modsec/coreruleset-nightly/rules/REQUEST-922-MULTIPART-ATTACK.conf
+echo -e "${c}Remove some rules because of Modsec/OWASP_CRS version compatibility"; $r
+# Ubuntu 22.04 LTS - libmodsecurity3.0.6-1
+# Ubuntu 20.04 LTS - libmodsecurity3.0.4-1build1
+if [ "$ubuntu_release" = "20.04" ]; then
+  sed -i -E 's/^SecArgumentsLimit /# SecArgumentsLimit /'  /etc/nginx/modsec/modsecurity.conf # > 3.0.5 required
+  sed -i -E 's/^SecRequestBodyJsonDepthLimit /# SecRequestBodyJsonDepthLimit /'  /etc/nginx/modsec/modsecurity.conf # > 3.0.6 required
+fi
+rm /etc/nginx/modsec/coreruleset-nightly/rules/REQUEST-922-MULTIPART-ATTACK.conf # > 2.9.6 or 3.0.8 required: https://forum.directadmin.com/threads/owasp-modsecurity-core-rule-set-version-3-3-4.67101/
 
 echo -e "${c}Test and restart!"; $r
 nginx -t
