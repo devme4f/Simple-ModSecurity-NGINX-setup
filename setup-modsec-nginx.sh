@@ -12,9 +12,9 @@ else
   echo -e "${y}Root privileges ok"; $r
 fi
 
-echo -e "${c}Installing nginx 1.18.0"; $r
+echo -e "${c}Installing default nginx version"; $r
 sudo apt update -y
-sudo apt install -y nginx=1.18.*
+sudo apt install -y nginx
 echo -e "${c}Checking NGINX version"; $r
 nginx -v
 
@@ -25,9 +25,11 @@ git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/M
 sudo apt -y install libmodsecurity3
 
 echo -e "${c}Get nginx connector for ModSecurity Module"; $r
-# compiled connector for nginx version 1.18.0 (compiled version have to match)
+# compiled connector for nginx (compiled version have to match)
+nginx_version=$(nginx -v 2>&1 | grep -Po '\d+\.\d+')
+ubuntu_release=$(lsb_release -a 2>&1 | grep 'Release:.*' | sed 's/Release://' | awk '{$1=$1};1')
 mkdir /etc/nginx/modules
-cp ./modsecurity-connector/1.18.0/ngx_http_modsecurity_module.so  /etc/nginx/modules/ngx_http_modsecurity_module.so
+cp ./modsecurity-connector/${ubuntu_release}_${nginx_version}/ngx_http_modsecurity_module.so  /etc/nginx/modules/ngx_http_modsecurity_module.so
 
 echo -e "${c}Create /etc/nginx/nginx.conf backup file"; $r
 cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
@@ -76,5 +78,5 @@ if [[ "403 Forbidden" == *$xss_tes* ]] && [ "${#xss_test}" != '0' ]; then
   echo -e "${y}[403 Forbidden]: Malicious requets blocked. Setup nginx ModSecurity successful!"; $r
   echo -e "${y}Check out audit log: /var/log/modsec/"; $r
 else
-  echo -e "${re}Not 403??, block failed, please check setup logs!"; $r
+  echo -e "${re}No 403??, block failed, please check setup logs!"; $r
 fi
