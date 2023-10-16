@@ -21,4 +21,6 @@ Just run:
 sudo bash setup-modsec-nginx.sh
 ```
 
-**Modsec Audit Log Location**: `/var/log/modsec/`
+Example setup success:
+
+!(success.png)[images/success.png]
