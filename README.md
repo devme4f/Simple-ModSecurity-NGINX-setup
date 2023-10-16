@@ -2,7 +2,7 @@
 
 Simple bash script to automatically install and setup ModSecurity Nginx and add OWASP Core Rule Set (CRS)
 
-This script support default nginx version corresponding to lately Ubuntu LTS version with already compiled `libmodsecurity3` and `ModSecurity Nginx Connector` so it doesn't require to compile both modules from source, which save alot of time and resources
+This script support fast setup for default nginx version corresponding to lately Ubuntu LTS version with already compiled `libmodsecurity3` and `ModSecurity Nginx Connector` so it doesn't require to compile both modules from source, which save alot of time and resources, **it took only about 2-3 minutes**
 
 **Ideas**: https://github.com/shubhampathak/ModSecurity-NGINX-setup
 ## Compatibility
@@ -15,6 +15,8 @@ This script will:
 3. Install OWASP Core Rule Set for ModSecurity 3, source: https://github.com/coreruleset/coreruleset
 4. Enable & Test
 
+## modsecurity-connector/build-compiled-connector.sh
+Install default nginx, download ModSecurity/ModSecurity Connector/nginx source code, Prerequisite tools,... to build modsec connector libray for current OS enviroment if not already available
 
 ## Usage
 Just run:
