@@ -10,7 +10,7 @@ Tested again `Ubuntu 22.04.2 LTS`
 This script will:
 1. Install nginx `1.18.0`
 2. Install `libmodsecurity3` via `apt install`
-3. Setup nginx modsecurity configuration with `ModSecurity nginx connector` from compiled binary above
+3. Setup nginx modsecurity configuration with `ModSecurity nginx connector` from compiled binary above, source: https://github.com/SpiderLabs/ModSecurity-nginx.git
 4. Install OWASP Core Rule Set for ModSecurity 3
 5. Enable & Test
 
