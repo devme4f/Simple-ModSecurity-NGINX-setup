@@ -23,4 +23,4 @@ sudo bash setup-modsec-nginx.sh
 
 Example setup success:
 
-!(success.png)[images/success.png]
+![success.png](images/success.png)
