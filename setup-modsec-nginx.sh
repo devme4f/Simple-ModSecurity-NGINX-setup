@@ -31,8 +31,8 @@ ubuntu_release=$(lsb_release -a 2>&1 | grep 'Release:.*' | sed 's/Release://' | 
 mkdir /etc/nginx/modules
 cp ./modsecurity-connector/${ubuntu_release}_${nginx_version}/ngx_http_modsecurity_module.so  /etc/nginx/modules/ngx_http_modsecurity_module.so
 
-echo -e "${c}Create /etc/nginx/nginx.conf backup file"; $r
-cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+echo -e "${c}Create default /etc/nginx/nginx.conf backup file"; $r
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.default.bak
 echo -e "${c}Enable ModSecurity in nginx.conf"; $r
 sed -i '1i\load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;' /etc/nginx/nginx.conf
 sed -i '/http {/a \    modsecurity on;\n    modsecurity_rules_file /etc/nginx/modsec/modsec-config.conf;' /etc/nginx/nginx.conf
@@ -72,16 +72,20 @@ if [ "$ubuntu_release" = "20.04" ]; then
 fi
 rm /etc/nginx/modsec/coreruleset-nightly/rules/REQUEST-922-MULTIPART-ATTACK.conf # > 2.9.6 or 3.0.8 required: https://forum.directadmin.com/threads/owasp-modsecurity-core-rule-set-version-3-3-4.67101/
 
+echo -e "${c}Create modsec /etc/nginx/nginx.conf backup file"; $r
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.modsec.bak
+
 echo -e "${c}Test and restart!"; $r
 nginx -t
 service nginx restart
 
-echo -e "${c}Test OWASP rules: curl 'http://localhost/?ggg=<script>alert(1)</script>'"; $r
-xss_test=$(curl -s 'http://localhost/?ggg=<script>alert(1)</script>')
-echo "$xss_test";
-if [[ "403 Forbidden" == *$xss_tes* ]] && [ "${#xss_test}" != '0' ]; then
-  echo -e "${y}[403 Forbidden]: Malicious requets blocked. Setup nginx ModSecurity successful!"; $r
-  echo -e "${y}Check out audit log: /var/log/modsec/"; $r
-else
-  echo -e "${re}No 403??, block failed, please check setup logs!"; $r
-fi
+echo -e "${c}Look like is done! Run this to test OWASP rules: curl 'http://localhost:80/?ggg=<script>'"; $r
+echo -e "${c}Nginx backup file: nginx.default.bak; nginx.modsec.bak"; $r
+echo -e "${c}Nginx Mod Security log: /var/log/modsec/"; $r
+#xss_test=$(curl -s 'http://localhost/?ggg=<script>')
+#echo "$xss_test";
+#if [[ "403 Forbidden" == *$xss_tes* ]] && [ "${#xss_test}" != '0' ]; then
+#  echo -e "${y}[403 Forbidden]: Malicious requets blocked. Setup nginx ModSecurity successful!"; $r
+#else
+#  echo -e "${re}No 403??, block failed, please check setup logs!"; $r
+#fi
