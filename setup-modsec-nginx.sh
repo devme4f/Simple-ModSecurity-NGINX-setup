@@ -62,6 +62,10 @@ echo "Include /etc/nginx/modsec/coreruleset-nightly/crs-setup.conf" >> /etc/ngin
 echo "Include /etc/nginx/modsec/coreruleset-nightly/rules/*.conf" >> /etc/nginx/modsec/modsec-config.conf
 rm -rf nightly.tar.gz
 
+# Create custom modsec rules folder
+mkdir /etc/nginx/modsec/custom-rules
+touch /etc/nginx/modsec/custom-rules/default.conf
+echo "Include /etc/nginx/modsec/custom-rules/*.conf" >> /etc/nginx/modsec/modsec-config.conf
 
 echo -e "${c}Remove some rules because of Modsec/OWASP_CRS version compatibility"; $r
 # Ubuntu 22.04 LTS - libmodsecurity3.0.6-1
