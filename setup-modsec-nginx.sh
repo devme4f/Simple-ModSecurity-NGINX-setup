@@ -47,6 +47,7 @@ sed -i 's/SecAuditLogParts ABIJDEFHZ/SecAuditLogParts ABCEFHJKZ/' /etc/nginx/mod
 sed -i 's/SecAuditEngine RelevantOnly/SecAuditEngine On/' /etc/nginx/modsec/modsecurity.conf
 sed -i 's/SecAuditLogType Serial/#SecAuditLogType Serial/' /etc/nginx/modsec/modsecurity.conf
 sed -i 's#^SecAuditLog /var/log/modsec_audit.log#SecAuditLogFormat JSON\nSecAuditLogType Concurrent\nSecAuditLogStorageDir /var/log/modsec/\nSecAuditLogFileMode 0777\nSecAuditLogDirMode 0777#' /etc/nginx/modsec/modsecurity.conf
+sed -i 's#^SecResponseBodyMimeType text/plain text/html text/xml#SecResponseBodyMimeType text/plain text/html text/xml application/json#' /etc/nginx/modsec/modsecurity.conf
 
 # Create modsec-config.conf File
 echo "Include /etc/nginx/modsec/modsecurity.conf" > /etc/nginx/modsec/modsec-config.conf
@@ -62,10 +63,11 @@ echo "Include /etc/nginx/modsec/coreruleset-nightly/crs-setup.conf" >> /etc/ngin
 echo "Include /etc/nginx/modsec/coreruleset-nightly/rules/*.conf" >> /etc/nginx/modsec/modsec-config.conf
 rm -rf nightly.tar.gz
 
-# Create custom modsec rules folder
+echo -e "${c}Creating modsec custom rules template: /etc/nginx/modsec/custom-rules/*"; $r
 mkdir /etc/nginx/modsec/custom-rules
 touch /etc/nginx/modsec/custom-rules/default.conf
 echo "Include /etc/nginx/modsec/custom-rules/*.conf" >> /etc/nginx/modsec/modsec-config.conf
+
 
 echo -e "${c}Remove some rules because of Modsec/OWASP_CRS version compatibility"; $r
 # Ubuntu 22.04 LTS - libmodsecurity3.0.6-1
