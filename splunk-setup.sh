@@ -2,18 +2,25 @@
 
 cred="$1"
 address="$2"
+hostname="$3"
 if [ "${#cred}" == '0' ]; then
-    echo "credential not provided, please run: bash $0 <acc:pass> <ip:port>"
+    echo "[EXIT] - credential not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
     exit;
 fi
 
 if [ "${#address}" == '0' ]; then
-    echo "address not provided, please run: bash $0 <acc:pass> <ip:port>"
+    echo "[EXIT] - address not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
+    exit;
+fi
+
+if [ "${#hostname}" == '0' ]; then
+    echo "[EXIT] - hostname not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
     exit;
 fi
 
 echo "Cred: $cred"
 echo "Addr: $address"
+echo "Hostname: $hostname"
 
 echo "[+] - Installing and starting the Splunk universal forwarder"
 dpkg -i ./resources/splunkforwarder-9.0.1-82c987350fde-linux-2.6-amd64.deb &&
@@ -29,13 +36,13 @@ echo "[INFO] - Add monitor directory"
 echo "[+] - Configuring..."
 FILE="/opt/splunkforwarder/etc/system/local/inputs.conf"
 echo "[default]" >> $FILE
-echo "host=proxy2" >> $FILE
+echo "host=$hostname" >> $FILE
 echo "[monitor:///var/log/modsec/]" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
 echo "sourcetype=proxy" >> $FILE
 
-echo "[+] - Restarting...!"
+echo "[+] - Restarting spunk, gonna take a while!"
 /opt/splunkforwarder/bin/splunk restart &&
 
 echo "[+] - Show configs"
