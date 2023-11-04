@@ -41,6 +41,7 @@ echo "[monitor:///var/log/modsec/]" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
 echo "sourcetype=proxy" >> $FILE
+echo "initCrcLength=654" >> $FILE
 
 echo "[+] - Restarting spunk, gonna take a while!"
 /opt/splunkforwarder/bin/splunk restart &&
