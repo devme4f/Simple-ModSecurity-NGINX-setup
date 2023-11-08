@@ -3,6 +3,7 @@
 cred="$1"
 address="$2"
 hostname="$3"
+logFolder="$4"
 if [ "${#cred}" == '0' ]; then
     echo "[EXIT] - credential not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
     exit;
@@ -18,9 +19,15 @@ if [ "${#hostname}" == '0' ]; then
     exit;
 fi
 
+if [ "${#logFolder}" == '0' ]; then
+    echo "[EXIT] - logFolder not provided, please run: bash $0 <acc:pass> <ip:port> <hostname> <logFolder>"
+    exit;
+fi
+
 echo "Cred: $cred"
 echo "Addr: $address"
 echo "Hostname: $hostname"
+echo "LogFolder: $logFolder"
 
 echo "[+] - Installing and starting the Splunk universal forwarder"
 dpkg -i ./resources/splunkforwarder-9.0.1-82c987350fde-linux-2.6-amd64.deb &&
@@ -37,11 +44,11 @@ echo "[+] - Configuring..."
 FILE="/opt/splunkforwarder/etc/system/local/inputs.conf"
 echo "[default]" >> $FILE
 echo "host=$hostname" >> $FILE
-echo "[monitor:///var/log/modsec/]" >> $FILE
+echo "[monitor://$logFolder]" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
-echo "sourcetype=proxy" >> $FILE
-echo "initCrcLength=654" >> $FILE
+echo "sourcetype=json" >> $FILE
+# echo "initCrcLength=654" >> $FILE # dùng khi log file có phần đầu giống nhau, bảo splunk check checksum đến 654 bytes
 
 echo "[+] - Restarting spunk, gonna take a while!"
 /opt/splunkforwarder/bin/splunk restart &&
