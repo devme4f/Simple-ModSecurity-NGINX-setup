@@ -5,17 +5,17 @@ address="$2"
 hostname="$3"
 logFolder="$4"
 if [ "${#cred}" == '0' ]; then
-    echo "[EXIT] - credential not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
+    echo "[EXIT] - credential not provided, please run: bash $0 <acc:pass> <ip:port> <hostname> <logFolder>"
     exit;
 fi
 
 if [ "${#address}" == '0' ]; then
-    echo "[EXIT] - address not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
+    echo "[EXIT] - address not provided, please run: bash $0 <acc:pass> <ip:port> <hostname> <logFolder>"
     exit;
 fi
 
 if [ "${#hostname}" == '0' ]; then
-    echo "[EXIT] - hostname not provided, please run: bash $0 <acc:pass> <ip:port> <hostname>"
+    echo "[EXIT] - hostname not provided, please run: bash $0 <acc:pass> <ip:port> <hostname> <logFolder>"
     exit;
 fi
 
