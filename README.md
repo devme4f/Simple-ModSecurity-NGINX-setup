@@ -21,11 +21,12 @@ Install default nginx, download ModSecurity/ModSecurity Connector/nginx source c
 ## splunk-setup.sh
 Setup splunk, config log forwader,...
 
-Example command for: `bash $0 <acc:pass> <ip:port> <hostname> <logFolder>``
+Example command for: `bash $0 <acc:pass> <ip:port> <hostname> <logFolder>`
 ```bash
 sudo bash splunk-setup.sh admin:pass123 171.172.171.172:9001 proxy1 /var/log/proxy-log
 ```
-In case we have two different log folers wanna log, just create a symlink to `/var/log/proxy-log`
+if we have more than 1 folder wanna log, just edit the file `/opt/splunkforwarder/etc/system/local/inputs.conf` like this
+![inputs.conf-config.png](images/inputs.conf-config.png)
 
 ## Usage
 Just run:

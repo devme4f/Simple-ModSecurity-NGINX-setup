@@ -42,9 +42,9 @@ echo "[INFO] - Add monitor directory"
 
 echo "[+] - Configuring..."
 FILE="/opt/splunkforwarder/etc/system/local/inputs.conf"
-echo "[default]" >> $FILE
-echo "host=$hostname" >> $FILE
+# echo "[default]" >> $FILE
 echo "[monitor://$logFolder]" >> $FILE
+echo "host=$hostname" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
 echo "sourcetype=_json" >> $FILE
