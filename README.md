@@ -18,6 +18,15 @@ This script will:
 ## modsecurity-connector/build-compiled-connector.sh
 Install default nginx, download ModSecurity/ModSecurity Connector/nginx source code, Prerequisite tools,... to build modsec connector libray for current OS enviroment if not already available
 
+## splunk-setup.sh
+Setup splunk, config log forwader,...
+
+Example command for: `bash $0 <acc:pass> <ip:port> <hostname> <logFolder>``
+```bash
+sudo bash splunk-setup.sh admin:pass123 171.172.171.172:9001 proxy1 /var/log/proxy-log
+```
+In case we have two different log folers wanna log, just create a symlink to `/var/log/proxy-log`
+
 ## Usage
 Just run:
 ```bash

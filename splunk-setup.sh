@@ -47,7 +47,7 @@ echo "host=$hostname" >> $FILE
 echo "[monitor://$logFolder]" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
-echo "sourcetype=json" >> $FILE
+echo "sourcetype=_json" >> $FILE
 # echo "initCrcLength=654" >> $FILE # dùng khi log file có phần đầu giống nhau, bảo splunk check checksum đến 654 bytes
 
 echo "[+] - Restarting spunk, gonna take a while!"
