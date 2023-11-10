@@ -48,7 +48,11 @@ echo "host=$hostname" >> $FILE
 echo "disabled=false" >> $FILE
 echo "index=proxy" >> $FILE
 echo "sourcetype=_json" >> $FILE
-# echo "initCrcLength=654" >> $FILE # dùng khi log file có phần đầu giống nhau, bảo splunk check checksum đến 654 bytes
+# https://docs.splunk.com/Documentation/Splunk/7.2.4/Data/Howlogfilerotationishandled
+# splunk default quét 256 bytes đầu file log để check checksum, set initCrcLength option để spunk check sâu hơn
+# echo "initCrcLength=654" >> $FILE
+# set log all file trong log folder mà ko cần check checksum (giả định mọi file đều unique)
+echo "crcSalt=$logFolder"
 
 echo "[+] - Restarting spunk, gonna take a while!"
 /opt/splunkforwarder/bin/splunk restart &&
